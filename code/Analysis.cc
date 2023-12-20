@@ -21,18 +21,18 @@ void Analysis::BeginJob()
 
   output_hist_file->cd();
 
-  cout << "\n" << "Analysis Inputs: selection: theta_e < "
+  cout << endl << "Analysis Inputs: selection: theta_e < "
        << paran.thetaMax << " mrad" << endl;
 
-  cout << "\n" << "Analysis Inputs: MAX theta for template histos = "
+  cout << endl << "Analysis Inputs: MAX theta for template histos = "
        << paran.theMaxTemp << " mrad" << endl;
 
   histos = new Histos(pargen, paran, parmain.output_dir);
 
-  cout << "\n" << "\t adding selection Ee > 20 GeV" << endl;
+  cout << endl << "\t adding selection Ee > 20 GeV" << endl;
   histos_e20 = new Histos(pargen, paran, parmain.output_dir, "e20_", false);
 
-  cout << "\n" << "\t adding selection |Dphi|<40 mrad" << endl;
+  cout << endl << "\t adding selection |Dphi|<40 mrad" << endl;
   histos_dph40 = new Histos(pargen, paran, parmain.output_dir, "dph40_", false);
 }
 
@@ -151,7 +151,7 @@ void Analysis::EndJob(const MCstat & mcsums, const FastSim & fs,
     histos->RatioFinal(n_events, fp, "hn_the");
     projfile->Write();
 
-    cerr << "\n" << "*** WARNING: missing code to normalize histograms to be used in analysis !!! \n" << endl;
+    cerr << endl << "*** WARNING: missing code to normalize histograms to be used in analysis !!!" << endl << endl;
 
     // test numerical precision comparing results from FORTRAN code to ROOT
     if (mc_inputs != nullptr)

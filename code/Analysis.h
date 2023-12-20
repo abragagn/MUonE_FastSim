@@ -23,8 +23,8 @@ namespace MuE
 
   public:
     Analysis(const One_Input & p, const MCpara & g,
-             const FS_Input & fsi, const AN_Input & a)
-      : parmain(p), pargen(g), parsim(fsi), paran(a) {}
+             const FS_Input & fsi, const AN_Input & a) :
+              parmain(p), pargen(g), parsim(fsi), paran(a) {}
 
     virtual ~Analysis() {};
 
@@ -41,13 +41,13 @@ namespace MuE
     const AN_Input & paran;
 
     MuEana myAna;
-    TFile * output_hist_file;
-    TFile * output_tree_file;
-    TTree * atree;
+    TFile* output_hist_file;
+    TFile* output_tree_file;
+    TTree* atree;
 
-    Histos * histos;
-    Histos * histos_e20;
-    Histos * histos_dph40;
+    Histos* histos;
+    Histos* histos_e20;
+    Histos* histos_dph40;
 
   };
 }

@@ -69,7 +69,7 @@ namespace MuE
         isync(0), eps(0), phmass(0)
       {};
 
-      void InitandSetRunParams_mesmer(char * input_mesmer);
+      void InitandSetRunParams_mesmer(char* input_mesmer);
 
       void Print() const;
       void Dump() const;
