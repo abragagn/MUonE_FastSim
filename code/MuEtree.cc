@@ -263,14 +263,14 @@ void MCpara::InitandSetRunParams_mesmer(char* input_mesmer)
 
 void MCpara::Print() const
 {
-  cout << "\n" << "========================================================================" << endl;
+  cout << "\n" << "===================================================" << endl;
   cout << "MuE generator: " << program_version << endl;
   cout << "Run Number: " << SampleTag << endl;
   cout << "Number of events requested = " << Nevreq << endl;
   string strwgt = UNWGT ? "Unweighted" : "Weighted";
   cout << strwgt << " events generation" << endl;
   cout << "Mode : " << Mode << ", nphotmode : " << nphotmode << endl;
-  cout << "radiation from muon, electron (1:on;0:off) : " << radmuch << " " << radelch << endl;
+  cout << "radiation from muon, electron (1:on;0:off) : "<< radmuch << " " << radelch << endl;
   if (!EXTBEAM)
   {
     cout << "muon beam energy        = " << Ebeam << " GeV" << endl;
@@ -304,17 +304,19 @@ void MCpara::Print() const
   cout << "Initial normalization Wnorm = " << setprecision(8) << Wnorm << " ub" << endl;
   if (READ_COEF) cout << "Reweighting coefficients will be read in." << endl;
   cout << "number of output distributions = " << Ndistr << endl;
-  cout << "========================================================================" << endl;
+  cout << "===========================================================" << endl;
 }
 
 void MCpara::Dump() const
 {
-  cout << "\n" << "========================================================================" << endl;
+  cout << "\n" << "===================================================" << endl;
   cout << "SampleTag = " << SampleTag << endl;
   cout << "program_version = " << program_version << endl;
-  cout << "process_ID = " << process_ID << ", running_on = " << running_on << ", start_time = " << start_time << endl;
+  cout << "process_ID = " << process_ID << ", running_on = " << running_on
+       << ", start_time = " << start_time << endl;
   cout << "Nevreq = " << Nevreq << ", UNWGT = " << UNWGT << endl;
-  cout << "Mode = " << Mode << ", nphotmode : " << nphotmode << ", radmuch = " << radmuch << ", radelch = " << radelch << endl;
+  cout << "Mode = " << Mode << ", nphotmode : " << nphotmode
+       << ", radmuch = " << radmuch << ", radelch = " << radelch << endl;
   cout << "rnd_ext = " << rnd_ext << ", rnd_int = " << rnd_int << endl;
   cout << "Ebeam = " << Ebeam << ", EbeamRMS = " << EbeamRMS << endl;
   cout << "EXTBEAM = " << EXTBEAM << endl;
@@ -334,7 +336,7 @@ void MCpara::Dump() const
   cout << "Nsearch = " << Nsearch << endl;
   cout << "Ndistr = " << Ndistr << endl;
   cout << "isync = " << isync << endl;
-  cout << "========================================================================" << endl;
+  cout << "===========================================================" << endl;
 }
 
 MCstat::MCstat(ifstream & input_file, bool debug): MCstat()
@@ -430,16 +432,18 @@ void MCstat::SetEndofRun_mesmer()
 
 void MCstat::Print() const
 {
-  cout << "\n" << "========================================================================" << endl;
+  cout << "\n" << "===================================================" << endl;
   cout << "N generated events        = " << Nevgen << endl;
   cout << "N weights                 = " << Nwgt << endl;
   cout << "N negative weights        = " << Nwgt_Negative << endl;
   cout << "N weights above Wmax      = " << Nwgt_OverMax << endl;
   cout << "True Max weight           = " << WmaxTrue << endl;
   cout << "Cross section             = " << Xsec << " +/- " << XsecErr << endl;
-  cout << "Cross section (negative)  = " << Xsec_Negative << " +/- " << Xsec_Negative_Err << endl;
-  cout << "Cross section (above max) = " << Xsec_OverMax << " +/- " << Xsec_OverMax_Err << endl;
-  cout << "========================================================================" << endl;
+  cout << "Cross section (negative)  = " << Xsec_Negative << " +/- "
+                                         << Xsec_Negative_Err << endl;
+  cout << "Cross section (above max) = " << Xsec_OverMax << " +/- "
+                                         << Xsec_OverMax_Err << endl;
+  cout << "===========================================================" << endl;
 }
 
 Double_t Particle::mass_e = 0;
@@ -546,7 +550,8 @@ bool Event::Read(ifstream & input_file, bool read_coef, bool debug)
     exit(400);
   }
 
-  if (!iok) cout << "*** ERROR: failed event readout, Run=" << RunNr << ", Event=" << EventNr << endl;
+  if (!iok) cout << "*** ERROR: failed event readout, Run=" << RunNr
+                 << ", Event=" << EventNr << endl;
   return iok;
 }
 
@@ -570,7 +575,8 @@ int Event::GenerateEvent_mesmer(double* pmu)
   MuE::Particle part;
 
   fspart.clear();
-  for (int i = 0; i < nfs; ++i) {
+  for (int i = 0; i < nfs; ++i)
+  {
     part.pdgId = mcids[i + 2];
     part.px    = pmat[i + 2][1];
     part.py    = pmat[i + 2][2];
@@ -585,7 +591,8 @@ void Event::Print() const
 {
   cout << "-------------------------------------------------" << endl;
   cout << "Run:" << RunNr << ", Event:" << EventNr << endl;
-  cout << "wgt_full=" << std::defaultfloat << wgt_full << ", wgt_norun=" << wgt_norun << ", wgt_lep=" << wgt_lep << endl;
+  cout << "wgt_full=" << std::defaultfloat << wgt_full
+       << ", wgt_norun=" << wgt_norun << ", wgt_lep=" << wgt_lep << endl;
   cout << "wgt_LO=" << wgt_LO << ", wgt_NLO=" << wgt_NLO << endl;
   cout << "coef=";
   for (auto & c : coef) cout << c << " ";
