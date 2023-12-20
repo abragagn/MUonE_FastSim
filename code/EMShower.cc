@@ -21,16 +21,14 @@ EMShower::EMShower(GammaFunctionGenerator *gamma,
                    int nPart,
                    double X0depth,
                    vector<double> energy_in,
-                   vector<double> coo)
-
-    : myGammaGenerator(gamma),
-      theParam(myParam),
-      // thePart(myPart),
-      theGrid(myGrid),
-      // random(engine),
-      bFixedLength_(bFixedLength),
-      nPart(nPart),
-      X0depth(X0depth)
+                   vector<double> coo) : myGammaGenerator(gamma),
+                                         theParam(myParam),
+                                         // thePart(myPart),
+                                         theGrid(myGrid),
+                                         // random(engine),
+                                         bFixedLength_(bFixedLength),
+                                         nPart(nPart),
+                                         X0depth(X0depth)
 {
 
   stepsCalculated = false;
@@ -150,8 +148,7 @@ void EMShower::prepareSteps()
     {
       dt = 1.0;
       stps = static_cast<int>(radlen);
-      if (stps == 0)
-        stps = 1;
+      if (stps == 0) stps = 1;
       Step step(0, dt);
       first_Ecal_step = steps.size();
       for (int ist = 0; ist < stps; ++ist)
@@ -169,8 +166,9 @@ void EMShower::prepareSteps()
   }
 
   nSteps = steps.size();
-  if (nSteps == 0)
-    return;
+
+  if (nSteps == 0) return;
+
   double ESliceTot = 0.;
   double MeanDepth = 0.;
   depositedEnergy.resize(nSteps);
@@ -195,17 +193,12 @@ void EMShower::prepareSteps()
       realTotalEnergy += depositedEnergy[iStep][i] * E[i];
     }
 
-    if (ESliceTot > 0.) // can happen for the shower tails; this depth will be skipped anyway
-      MeanDepth /= ESliceTot;
-    else
-      MeanDepth = t - dt;
+    if (ESliceTot > 0.) MeanDepth /= ESliceTot; // can happen for the shower tails; this depth will be skipped anyway
+    else MeanDepth = t - dt;
 
     meanDepth[iStep] = MeanDepth;
 
-    if (realTotalEnergy < 0.001)
-    {
-      offset -= 1;
-    }
+    if (realTotalEnergy < 0.001) offset -= 1;
     // cout << " energia depositata allo step " << iStep << " è " << realTotalEnergy << " GeV"<< endl;
 
     Etot_step.push_back(0.);
@@ -225,8 +218,7 @@ void EMShower::compute()
 
   double t = 0.;
   double dt = 0.;
-  if (!stepsCalculated)
-    prepareSteps();
+  if (!stepsCalculated) prepareSteps();
   // Prepare the grids in Ecal
   bool status = false;
 
@@ -267,19 +259,15 @@ void EMShower::compute()
 
     // If less than 1 kEV. Just skip
 
-    if (iStep > 2 && realTotalEnergy < 0.000001)
-      continue;
+    if (iStep > 2 && realTotalEnergy < 0.000001) continue;
 
     if (!usePreviousGrid)
     {
-      if (tt > 24.5)
-        status = false;
-      else
-        status = true;
+      if (tt > 24.5) status = false;
+      else           status = true;
     }
 
-    if (!status)
-      continue;
+    if (!status) continue;
 
     bool detailedShowerTail = false;
     // check if a detailed treatment of the rear leakage should be applied
@@ -301,8 +289,7 @@ void EMShower::compute()
       // cout << " % di enrgia depositata dalla particella è E%= " << dE << endl;
       // no need to do the full machinery if there is ~nothing to distribute)
 
-      if (dE * E[i] < 0.000001)
-        continue;
+      if (dE * E[i] < 0.000001) continue;
 
       totECalc += dE;
 
@@ -316,7 +303,8 @@ void EMShower::compute()
       dE *= 1. + z0 * theECAL->lightCollectionUniformity();
 
       // Expected spot number
-      nS = (theNumberOfSpots[i] * gam(bSpot[i] * tt, aSpot[i]) * bSpot[i] * dt / tgamma(aSpot[i]));
+      nS = (theNumberOfSpots[i] * gam(bSpot[i] * tt, aSpot[i]) * bSpot[i] * dt
+            / tgamma(aSpot[i]));
       // +
 
       if (detailedShowerTail)
@@ -338,10 +326,10 @@ void EMShower::compute()
       double theRC = theParam->rC(taui, E[i]);
       double theRT = theParam->rT(taui, E[i]);
 
-      double dSpotsCore = gRandom->Gaus(proba * nSpot, std::sqrt(proba * (1. - proba) * nSpot));
+      double dSpotsCore = gRandom->Gaus(proba * nSpot,
+                                        std::sqrt(proba * (1. - proba) * nSpot));
 
-      if (dSpotsCore < 0)
-        dSpotsCore = 0;
+      if (dSpotsCore < 0) dSpotsCore = 0;
 
       unsigned nSpots_core = (unsigned)(dSpotsCore + 0.5);
       unsigned nSpots_tail = ((unsigned)nSpot > nSpots_core) ? nSpot - nSpots_core : 0;
@@ -393,13 +381,13 @@ void EMShower::compute()
 
             // Generate phi
             double phi = 2. * M_PI * gRandom->Uniform(); //!!!!!!!!!
-                                                         // cout << "lo spot " << ispot << " si trova in (r,phi) = (" << ri << ", " << phi << ")" << endl;
+            // cout << "lo spot " << ispot << " si trova in (r,phi) = (" << ri << ", " << phi << ")" << endl;
 
             // Now the *moliereRadius is done in EcalHitMaker
 
             if (detailedShowerTail)
             {
-              //			   std::// cout << "About to call addHitDepth " << std::endl;
+              //         std::// cout << "About to call addHitDepth " << std::endl;
               double depth;
               do
               {
@@ -409,7 +397,7 @@ void EMShower::compute()
               theGrid->AddHitCooDepth(ri, phi, Xi, Yi, spote, depth, X0depth);
               Etot[i] += spote;
               Etot_step[iStep] += spote;
-              //			   std::// cout << " Done " << std::endl;
+              //         std::// cout << " Done " << std::endl;
             }
             else
 
@@ -445,14 +433,12 @@ void EMShower::compute()
 
 double EMShower::gam(double x, double a) const
 {
-
   // A stupid gamma function
   return std::pow(x, a - 1.) * std::exp(-x);
 }
 
 double EMShower::deposit(double t, double a, double b, double dt)
 {
-
   double b1 = b * (t - dt);
   double b2 = b * t;
   double result = 0.;
@@ -476,8 +462,7 @@ double EMShower::deposit(double a, double b, double t)
 {
   double b2 = b * t;
   double result = 0.;
-  if (fabs(b2) < 1.e-9)
-    b2 = 1.e-9;
+  if (fabs(b2) < 1.e-9) b2 = 1.e-9;
   result = myIncompleteGamma.MyGamma(a, b2);
   //  std::// cout << " deposit t = " << t  << " "  << result <<std::endl;
   return result;

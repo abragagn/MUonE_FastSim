@@ -16,38 +16,74 @@
 using namespace std;
 
 
-ECAL::ECAL(double nbinsx, 
-    double xlow, 
-    double xup, 
-    double nbinsy, 
-    double ylow, 
-    double yup)
-    :
-    nbinX(nbinsx),nbinY(nbinsy),Xlow(xlow),Xup(xup),Ylow(ylow),Yup(yup) 
-    {
-        //Queste mappe servono a mappare il numero di bin nel numero vero della cella e viceversa
-        //perchè i numeri dei bin sono sballati a causa degli overflow e underflow bins
-        number[36]=1; number[37]=2; number[38]=3; number[39]=4; number[40]=5;
-        number[29]=6; number[30]=7; number[31]=8; number[32]=9; number[33]=10;
-        number[22]=11; number[23]=12; number[24]=13; number[25]=14; number[26]=15;
-        number[15]=16; number[16]=17; number[17]=18; number[18]=19; number[19]=20;
-        number[8]=21; number[9]=22; number[10]=23; number[11]=24; number[12]=25;
-        
-        Rev_number[1]=36; Rev_number[2]=37; Rev_number[3]=38; Rev_number[4]=39; Rev_number[5]=40;
-        Rev_number[6]=29; Rev_number[7]=30; Rev_number[8]=31; Rev_number[9]=32; Rev_number[10]=33;
-        Rev_number[11]=22; Rev_number[12]=23; Rev_number[13]=24; Rev_number[14]=25; Rev_number[15]=26;
-        Rev_number[16]=15; Rev_number[17]=16; Rev_number[18]=17; Rev_number[19]=18; Rev_number[20]=19;
-        Rev_number[21]=8; Rev_number[22]=9; Rev_number[23]=10; Rev_number[24]=11; Rev_number[25]=12;
-      
+ECAL::ECAL(double nbinsx, double xlow, double xup,
+           double nbinsy, double ylow, double yup) :
+            nbinX(nbinsx), nbinY(nbinsy), Xlow(xlow),
+            Xup(xup), Ylow(ylow), Yup(yup) 
+{
+  //Queste mappe servono a mappare il numero di bin nel numero vero della cella e viceversa
+  //perchè i numeri dei bin sono sballati a causa degli overflow e underflow bins
+  number[36] = 1;
+  number[37] = 2;
+  number[38] = 3;
+  number[39] = 4;
+  number[40] = 5;
+  number[29] = 6;
+  number[30] = 7;
+  number[31] = 8;
+  number[32] = 9;
+  number[33] = 10;
+  number[22] = 11;
+  number[23] = 12;
+  number[24] = 13;
+  number[25] = 14;
+  number[26] = 15;
+  number[15] = 16;
+  number[16] = 17;
+  number[17] = 18;
+  number[18] = 19;
+  number[19] = 20;
+  number[8] = 21;
+  number[9] = 22;
+  number[10] = 23;
+  number[11] = 24;
+  number[12] = 25;
 
-  //  Energy_dist =new TH1F("Energy", "Energy",100,90,100);
-  // Energy_dist1 =new TH1F("Energy", "Energy 1 cell",200,0.20,1);
-  // Energy_dist3x3 =new TH1F("Energy", "Energy 3x3 cells",200,0.70,1);
+  Rev_number[1] = 36;
+  Rev_number[2] = 37;
+  Rev_number[3] = 38;
+  Rev_number[4] = 39;
+  Rev_number[5] = 40;
+  Rev_number[6] = 29;
+  Rev_number[7] = 30;
+  Rev_number[8] = 31;
+  Rev_number[9] = 32;
+  Rev_number[10] = 33;
+  Rev_number[11] = 22;
+  Rev_number[12] = 23;
+  Rev_number[13] = 24;
+  Rev_number[14] = 25;
+  Rev_number[15] = 26;
+  Rev_number[16] = 15;
+  Rev_number[17] = 16;
+  Rev_number[18] = 17;
+  Rev_number[19] = 18;
+  Rev_number[20] = 19;
+  Rev_number[21] = 8;
+  Rev_number[22] = 9;
+  Rev_number[23] = 10;
+  Rev_number[24] = 11;
+  Rev_number[25] = 12;
+  
 
-    
-    Array9=0;
-        
-    }
+//  Energy_dist =new TH1F("Energy", "Energy",100,90,100);
+// Energy_dist1 =new TH1F("Energy", "Energy 1 cell",200,0.20,1);
+// Energy_dist3x3 =new TH1F("Energy", "Energy 3x3 cells",200,0.70,1);
+
+
+  Array9 = 0;
+
+}
 
 // metodo che crea l'istogramma rappresentante il calorimetro
 
@@ -57,30 +93,35 @@ ECAL::ECAL(double nbinsx,
     return EcalGrid;
 };*/
 
-void ECAL::CreateGrid(double nbinsx,double xlow,double xup,double nbinsy,double ylow,double yup)
+void ECAL::CreateGrid(double nbinsx, double xlow, double xup,
+                      double nbinsy, double ylow, double yup)
 {
-    EcalGrid = new TH2F("EcalGrid" , "EM Calorimeter with E in GeV",nbinsx,xlow,xup,nbinsy,ylow,yup);
-   // return EcalGrid;
+  EcalGrid = new TH2F("EcalGrid" , "EM Calorimeter with E in GeV",
+                      nbinsx, xlow, xup, nbinsy, ylow, yup);
+  // return EcalGrid;
 };
 
 
 TH2F* ECAL::GiveEcalGrid()
-{return EcalGrid;};
+{
+  return EcalGrid;
+};
 
 void ECAL::SetEnergy(double energy)
 {
-    energy_IN=energy;
+  energy_IN = energy;
 }
-// metodo che assegna il numero della cella che viene colpita dalla particella 
-double ECAL::GiveCentralCell(double coox,double cooy)
-{   
-    int binx = EcalGrid->GetXaxis()->FindBin(coox);
-    int biny = EcalGrid->GetYaxis()->FindBin(cooy);
-    int nbin = EcalGrid->GetBin(binx,biny);
 
-    //cout <<"Number of the cell:" << number[nbin] << endl;
+// metodo che assegna il numero della cella che viene colpita dalla particella
+double ECAL::GiveCentralCell(double coox, double cooy)
+{
+  int binx = EcalGrid->GetXaxis()->FindBin(coox);
+  int biny = EcalGrid->GetYaxis()->FindBin(cooy);
+  int nbin = EcalGrid->GetBin(binx, biny);
 
-    return number[nbin];
+  //cout <<"Number of the cell:" << number[nbin] << endl;
+
+  return number[nbin];
 };
 
 /*int* ECAL::GiveArray3x3(int n)
@@ -117,24 +158,28 @@ double ECAL::GiveCentralCell(double coox,double cooy)
 // metodo che aggiunge il punto di coo(x,y) all'istogramma, quindi al calorimetro e dà numero cella
 
 
-double ECAL::AddHitCoo(double r, double phi,double xi, double yi, double w)
-{   r *= 2.19;
-    double x=r*cos(phi)+xi; // coo x in cm
-    double y=r*sin(phi)+yi; // coo y in cm
-    EcalGrid->Fill(x,y,w);   
- 
-double number=ECAL::GiveCentralCell(x,y);
-return number;
+double ECAL::AddHitCoo(double r, double phi, double xi, double yi, double w)
+{
+  r *= 2.19;
+  double x = r * cos(phi) + xi; // coo x in cm
+  double y = r * sin(phi) + yi; // coo y in cm
+  EcalGrid->Fill(x, y, w);
+
+  double number = ECAL::GiveCentralCell(x, y);
+  return number;
 };
 
-void ECAL::AddHitCooDepth(double r, double phi,double xi, double yi, double w, double depth, double X0depth)
-{   depth += X0depth;
-    r *= 2.19;
-    double x=r*cos(phi)+xi; // coo x in cm
-    double y=r*sin(phi)+yi; // coo y in cm
- if (24.7-X0depth>depth) 
- {EcalGrid->Fill(x,y,w);}
-
+void ECAL::AddHitCooDepth(double r, double phi, double xi, double yi,
+                          double w, double depth, double X0depth)
+{
+  depth += X0depth;
+  r *= 2.19;
+  double x = r * cos(phi) + xi; // coo x in cm
+  double y = r * sin(phi) + yi; // coo y in cm
+  if (24.7 - X0depth > depth)
+  {
+    EcalGrid->Fill(x, y, w);
+  }
 };
 
 // metodo che disegna l'evento nel calorimetro e le celle che vengono colpite
@@ -181,12 +226,15 @@ return ECluster;
 
 
 double* ECAL::EnergyContent()
-{   double* E_cell= new double[25];
-    for (int i=1; i<26 ; ++i)
-    {E_cell[i-1]=(EcalGrid->GetBinContent(Rev_number[i]));}
-    return E_cell;
+{
+  double* E_cell = new double[25];
+  for (int i = 1; i < 26 ; ++i)
+  {
+    E_cell[i - 1] = (EcalGrid->GetBinContent(Rev_number[i]));
+  }
+  return E_cell;
 }
-   
+
 /*void ECAL::Print_()
 {TCanvas * encell= new TCanvas("Energy cells","Energy cells",1000,100,2500,2000);
 encell->Divide(1,2);

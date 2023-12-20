@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iomanip> 
+#include <iomanip>
 #include <sstream>
 #include "MuEtree.h"
 #include "Utils.h"
@@ -243,11 +243,11 @@ void MCpara::InitandSetRunParams_mesmer(char* input_mesmer)
   int ivpwgts;
 
   mesmer_setup(&SampleTag, mesmerversion, hostname, datetime, &process_ID,
-    &Nevreq, &areweighted, RCorder, &nphotmode, &radmuch, &radelch, &rnd_ext,
-    &rnd_int, &Ebeam, &EbeamRMS, &extmubeam, &charge_mu, &mass_mu, &mass_e,
-    &invalfa0, &Wnorm, &Wmax, &Emin_e, &thmin_e, &thmax_e, &thmin_mu, &thmax_mu,
-    &Ethr, &ththr, &i_acopl, &cut_acopl, &i_elast, &cut_elast, &ivpwgts,
-    &ihadVP, &ihadVPfl, &Nsearch, &Ndistr, &isync, &eps, &phmass);
+               &Nevreq, &areweighted, RCorder, &nphotmode, &radmuch, &radelch, &rnd_ext,
+               &rnd_int, &Ebeam, &EbeamRMS, &extmubeam, &charge_mu, &mass_mu, &mass_e,
+               &invalfa0, &Wnorm, &Wmax, &Emin_e, &thmin_e, &thmax_e, &thmin_mu, &thmax_mu,
+               &Ethr, &ththr, &i_acopl, &cut_acopl, &i_elast, &cut_elast, &ivpwgts,
+               &ihadVP, &ihadVPfl, &Nsearch, &Ndistr, &isync, &eps, &phmass);
 
   program_version = mesmerversion;
   running_on = hostname;
@@ -270,7 +270,7 @@ void MCpara::Print() const
   string strwgt = UNWGT ? "Unweighted" : "Weighted";
   cout << strwgt << " events generation" << endl;
   cout << "Mode : " << Mode << ", nphotmode : " << nphotmode << endl;
-  cout << "radiation from muon, electron (1:on;0:off) : "<< radmuch << " " << radelch << endl;
+  cout << "radiation from muon, electron (1:on;0:off) : " << radmuch << " " << radelch << endl;
   if (!EXTBEAM)
   {
     cout << "muon beam energy        = " << Ebeam << " GeV" << endl;
@@ -407,12 +407,12 @@ MCstat::MCstat(ifstream & input_file, bool debug): MCstat()
   stream >> key;
   if (key == "</footer>")
   {
-    cout << "End reading the footer section." <<endl;
+    cout << "End reading the footer section." << endl;
     Print();
 
     if (!iok)
     {
-      cout<<"*** ERROR: failed readout of footer section."<<endl;
+      cout << "*** ERROR: failed readout of footer section." << endl;
       std::exit(500);
     }
   } else
@@ -426,8 +426,8 @@ MCstat::MCstat(ifstream & input_file, bool debug): MCstat()
 void MCstat::SetEndofRun_mesmer()
 {
   finalize_mesmer(&Xsec, &XsecErr, &Nwgt, &Nevgen, &WmaxTrue, &Nwgt_OverMax,
-    &Nwgt_Negative, &Xsec_OverMax, &Xsec_OverMax_Err, &Xsec_Negative,
-    &Xsec_Negative_Err, &Swgt, &SQwgt, &Swgt_Negative, &SQwgt_Negative);
+                  &Nwgt_Negative, &Xsec_OverMax, &Xsec_OverMax_Err, &Xsec_Negative,
+                  &Xsec_Negative_Err, &Swgt, &SQwgt, &Swgt_Negative, &SQwgt_Negative);
 }
 
 void MCstat::Print() const
@@ -440,9 +440,9 @@ void MCstat::Print() const
   cout << "True Max weight           = " << WmaxTrue << endl;
   cout << "Cross section             = " << Xsec << " +/- " << XsecErr << endl;
   cout << "Cross section (negative)  = " << Xsec_Negative << " +/- "
-                                         << Xsec_Negative_Err << endl;
+       << Xsec_Negative_Err << endl;
   cout << "Cross section (above max) = " << Xsec_OverMax << " +/- "
-                                         << Xsec_OverMax_Err << endl;
+       << Xsec_OverMax_Err << endl;
   cout << "===========================================================" << endl;
 }
 
@@ -551,7 +551,7 @@ bool Event::Read(ifstream & input_file, bool read_coef, bool debug)
   }
 
   if (!iok) cout << "*** ERROR: failed event readout, Run=" << RunNr
-                 << ", Event=" << EventNr << endl;
+                   << ", Event=" << EventNr << endl;
   return iok;
 }
 

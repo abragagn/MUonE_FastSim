@@ -7,17 +7,17 @@
 #include <iostream>
 using namespace std;
 
-class IncGamma 
+class IncGamma
 {
 public:
 
 //costruttore
-IncGamma();
+  IncGamma();
 //distruttore
-~ IncGamma(){}
+  ~ IncGamma() {}
 
-double MyGamma(double a, double x);
-TF1* Set_a(double a, TF1* gamma);
+  double MyGamma(double a, double x);
+  TF1* Set_a(double a, TF1* gamma);
 //TF1* Set_lim(double lim, TF1* gamma);
 
 };

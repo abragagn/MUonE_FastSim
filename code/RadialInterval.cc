@@ -5,14 +5,16 @@
 #include <cmath>
 
 RadialInterval::RadialInterval(double RC, unsigned nSpots, double energy)
-    : theR(RC), theNumberOfSpots(nSpots), theSpotEnergy(energy) {
+  : theR(RC), theNumberOfSpots(nSpots), theSpotEnergy(energy)
+  {
   currentRad = 0.;
   currentEnergyFraction = 0.;
   currentUlim = 0.;
   nInter = 0;
 }
 
-void RadialInterval::addInterval(double radius, double spotf) {
+void RadialInterval::addInterval(double radius, double spotf)
+{
   double radiussq = radius * radius;
   double enFrac = energyFractionInRadius(radius);
   if (radius > 10)
@@ -23,7 +25,7 @@ void RadialInterval::addInterval(double radius, double spotf) {
 
   // Calculates the number of spots. Add binomial fluctuations
   double dspot =
-      gRandom->Gaus(theNumberOfSpots * energyFrac, sqrt(energyFrac * (1. - energyFrac) * theNumberOfSpots));
+    gRandom->Gaus(theNumberOfSpots * energyFrac, sqrt(energyFrac * (1. - energyFrac) * theNumberOfSpots));
   //  std::cout << " Normal : " << theNumberOfSpots*energyFrac << " "<< dspot << std::endl;
   unsigned nspot = (unsigned)(dspot * spotf + 0.5);
   //  if(nspot<100)
@@ -43,7 +45,8 @@ void RadialInterval::addInterval(double radius, double spotf) {
   spotE.push_back(spotEnergy);
   // computes the limits
   double umax = radiussq / (radiussq + theR * theR);
-  if (radius > 10) {
+  if (radius > 10)
+  {
     umax = 1.;
   }
 
@@ -58,16 +61,19 @@ void RadialInterval::addInterval(double radius, double spotf) {
   ++nInter;
 }
 
-double RadialInterval::energyFractionInRadius(double rm) {
+double RadialInterval::energyFractionInRadius(double rm)
+{
   double rm2 = rm * rm;
   return (rm2 / (rm2 + theR * theR));
 }
 
-void RadialInterval::compute() {
+void RadialInterval::compute()
+{
   //  std::cout << " The number of Spots " << theNumberOfSpots << std::endl;
   //  std::cout << " Size : " << nInter << " " << nspots.size() << " " << dspotsunscaled.size() << std::endl;
   double ntotspots = 0.;
-  for (unsigned irad = 0; irad < nInter - 1; ++irad) {
+  for (unsigned irad = 0; irad < nInter - 1; ++irad)
+  {
     ntotspots += dspotsunscaled[irad];
     //    std::cout << " In the loop " << ntotspots << std::endl;
   }

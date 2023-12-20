@@ -17,7 +17,7 @@
 #include "TChain.h"
 #include "TString.h"
 #include "TSystem.h"
-#include "MuEtree.h" 
+#include "MuEtree.h"
 #include "FastSim.h"
 #include "Analysis.h"
 #include "Utils.h"
@@ -27,7 +27,7 @@
 
 using namespace std;
 using namespace MuE;
-  
+
 int main(int argc, char* argv[])
 {
 
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
   if (iexist != 0)
   {
     cerr << "ERROR: directory " << workdir <<
-    " already exists. Please change the output name." << endl;
+         " already exists. Please change the output name." << endl;
     exit(200);
   }
 
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
 
   if (nhdtot != nfiles) {
     cerr << "***ERROR: number of headers = " << nhdtot
-    << " does not correspond to the number of chained files = " << nfiles << endl;
+         << " does not correspond to the number of chained files = " << nfiles << endl;
     exit(300);
   }
 
@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
   MuE::MCstat sums;    // sums over the chained trees
   Double_t WmaxFinal(0);
 
-  for (Long_t ifil=0; ifil < nfiles; ++ifil)
+  for (Long_t ifil = 0; ifil < nfiles; ++ifil)
   {
 
     Long64_t ientry = parchain.LoadTree(ifil);
@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
       string strwgt = pargen.UNWGT ? "Unweighted" : "Weighted";
       cout << strwgt << " events generation" << endl;
       cout << "Mode : " << pargen.Mode;
-           << ", nphotmode : " << pargen.nphotmode << endl;
+          << ", nphotmode : " << pargen.nphotmode << endl;
       cout << "radiation from muon, electron (1:on;0:off) : "
            << pargen.radmuch << " " << pargen.radelch << endl;
 
@@ -185,11 +185,11 @@ int main(int argc, char* argv[])
 
       if (pargen.i_acopl == 0) cout << "No Acoplanarity cut" << endl;
       else cout << "Acoplanarity cut (" << pargen.i_acopl << ") = "
-                << pargen.cut_acopl << " mrad" << endl;
+                  << pargen.cut_acopl << " mrad" << endl;
 
       if (pargen.i_elast == 0) cout << "No Elasticity cut" << endl;
       else cout << "Elasticity cut (" << pargen.i_elast << ") = "
-                << pargen.cut_elast << " mrad" << endl;
+                  << pargen.cut_elast << " mrad" << endl;
 
       cout << "Initial normalization Wnorm = " << setprecision(8) << pargen.Wnorm << " ub" << endl;
 
@@ -221,13 +221,13 @@ int main(int argc, char* argv[])
     cout << "True Max weight           = " << setup->MCsums.WmaxTrue << endl;
 
     cout << "Cross section             = " << setup->MCsums.Xsec << " +/- "
-                                           << setup->MCsums.XsecErr << endl;
+         << setup->MCsums.XsecErr << endl;
 
     cout << "Cross section (negative)  = " << setup->MCsums.Xsec_Negative << " +/- "
-                                           << setup->MCsums.Xsec_Negative_Err << endl;
+         << setup->MCsums.Xsec_Negative_Err << endl;
 
     cout << "Cross section (above max) = " << setup->MCsums.Xsec_OverMax << " +/- "
-                                           << setup->MCsums.Xsec_OverMax_Err << endl;
+         << setup->MCsums.Xsec_OverMax_Err << endl;
 
     // incremental sums
     sums.Nevgen         += setup->MCsums.Nevgen;
@@ -254,7 +254,7 @@ int main(int argc, char* argv[])
   {
     Avwgt_Negative = sums.Swgt_Negative / sums.Nwgt;
     ErrAvwgt_Negative = sqrt( (sums.SQwgt_Negative / sums.Nwgt
-                              - Avwgt_Negative * Avwgt_Negative) / sums.Nwgt );
+                               - Avwgt_Negative * Avwgt_Negative) / sums.Nwgt );
   }
 
   Double_t sigma0 = pargen.Wnorm;
@@ -275,13 +275,13 @@ int main(int argc, char* argv[])
   cout << "True Max weight           = " << WmaxFinal << endl;
 
   cout << "Cross section             = " << sums.Xsec << " +/- "
-                                         << sums.XsecErr << endl;
+       << sums.XsecErr << endl;
 
   cout << "Cross section (negative)  = " << sums.Xsec_Negative << " +/- "
-                                         << sums.Xsec_Negative_Err << endl;
+       << sums.Xsec_Negative_Err << endl;
 
   //  cout<<"Cross section (above max) = "<< sums.Xsec_OverMax << " +/- "
-                                          << sums.Xsec_OverMax_Err << endl;
+      << sums.Xsec_OverMax_Err << endl;
 
   cout << "Cross section (above max) =  *** TO BE DEFINED *** " << endl;
   cout << "===========================================================" << endl;
@@ -310,7 +310,7 @@ int main(int argc, char* argv[])
   //
   Long_t n_events = cfg.n_events;
 
-  if (n_events <0)
+  if (n_events < 0)
   {
     cerr << "\n" << "Kinematic distributions will be loaded from existing results." << endl;
   }
@@ -322,7 +322,7 @@ int main(int argc, char* argv[])
       if (sums.Nwgt != nevtot)
       {
         cerr << "***WARNING: total number of chained events ("
-             << nevtot <<") is different from the expected number of generated events ("
+             << nevtot << ") is different from the expected number of generated events ("
              << sums.Nwgt << ")" << endl;
       }
     } else
@@ -342,10 +342,10 @@ int main(int argc, char* argv[])
   auto ecalprop = new ECALProperties();
 
   auto myparam = new EMECALShowerParametrization(ecalprop,
-                                                 {100.0, 0.1},
-                                                 {1.0, 0.1, 100.0, 1.0},
-                                                 1,
-                                                 1);
+  {100.0, 0.1},
+  {1.0, 0.1, 100.0, 1.0},
+  1,
+  1);
 
   auto TheEcal = new ECAL(5, -7.125, 7.125, 5, -7.125, 7.125);
 

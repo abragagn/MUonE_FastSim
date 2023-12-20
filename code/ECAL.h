@@ -16,54 +16,59 @@
 
 using namespace std;
 
-class ECAL 
+class ECAL
 //: public TH2
 {
 public:
 
-//costruttore
-ECAL(double nbinsx, 
-    double xlow, 
-    double xup, 
-    double nbinsy, 
-    double ylow, 
-    double yup);
-//distruttore
-~ ECAL(){}
+  //costruttore
+  ECAL(double nbinsx,
+       double xlow,
+       double xup,
+       double nbinsy,
+       double ylow,
+       double yup);
+
+  //distruttore
+  ~ ECAL() {}
 
 
-//double radlen;
+  //double radlen;
+  void CreateGrid(double nbinsx, double xlow, double xup, double nbinsy,
+                  double ylow, double yup);
 
-void CreateGrid(double nbinsx,double xlow,double xup,double nbinsy,double ylow,double yup);
-TH2F* GiveEcalGrid();
-double GiveCentralCell(double coox,double cooy);
-void SetEnergy(double energy);
-int* GiveArray3x3(int n);
-double AddHitCoo(double r,double phi,double xi,double yi,double w);
-void AddHitCooDepth(double r, double phi,double xi, double yi, double w, double depth, double deX0depthoffset_pth);
-double* Draw_ECAL(int i);
-double* EnergyContent();
-void Print_();
-inline void setSpotEnergy(double e) { spotEnergy = e; }
+  TH2F* GiveEcalGrid();
+  double GiveCentralCell(double coox, double cooy);
+  void SetEnergy(double energy);
+  int* GiveArray3x3(int n);
+  double AddHitCoo(double r, double phi, double xi, double yi, double w);
+
+  void AddHitCooDepth(double r, double phi, double xi, double yi, double w,
+                      double depth, double deX0depthoffset_pth);
+
+  double* Draw_ECAL(int i);
+  double* EnergyContent();
+  void Print_();
+  inline void setSpotEnergy(double e) { spotEnergy = e; }
 
 private:
-const double nbinX;
-const double nbinY;
-const double Xlow;
-const double Xup;
-const double Ylow;
-const double Yup;
-double spotEnergy;
-double energy_IN;
-typedef map<int, int>  n_cell;
-n_cell number;
-n_cell Rev_number;
+  const double nbinX;
+  const double nbinY;
+  const double Xlow;
+  const double Xup;
+  const double Ylow;
+  const double Yup;
+  double spotEnergy;
+  double energy_IN;
+  typedef map<int, int>  n_cell;
+  n_cell number;
+  n_cell Rev_number;
 
-TH1F* Energy_dist;
-TH1F* Energy_dist1;
-TH1F* Energy_dist3x3;
-TH2F* EcalGrid;
+  TH1F* Energy_dist;
+  TH1F* Energy_dist1;
+  TH1F* Energy_dist3x3;
+  TH2F* EcalGrid;
 
-int *Array9;
+  int* Array9;
 };
 #endif

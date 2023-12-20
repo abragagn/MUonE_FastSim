@@ -9,26 +9,26 @@ using namespace ROOT;
 using namespace Math;
 
 
-IncGamma::IncGamma(){}
+IncGamma::IncGamma() {}
 
 /*TF1* IncGamma::MyGamma()
 {
 TF1 *MyIncompleteGamma= new TF1("Inc","ROOT::Math::inc_gamma([0],x)");
-    
+
         return MyIncompleteGamma;
 };*/
 
 double IncGamma::MyGamma(double a, double x)
 {
-double MyIncompleteGamma= ROOT::Math::inc_gamma(a,x);
-    
-        return MyIncompleteGamma;
+  double MyIncompleteGamma = ROOT::Math::inc_gamma(a, x);
+
+  return MyIncompleteGamma;
 };
 
 TF1* IncGamma::Set_a(double a, TF1* gamma)
 {
-  gamma->SetParameter(0,a);
-return gamma;
+  gamma->SetParameter(0, a);
+  return gamma;
 };
 
 /*TF1* IncGamma::Set_lim(double lim)

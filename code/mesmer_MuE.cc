@@ -1,16 +1,16 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// Generate MESMER MuE MC events and process them through  
+// Generate MESMER MuE MC events and process them through
 //  Fast Detector Simulation and Analysis in one step
 //  saving relevant histograms, trees and plots
 //
 //   Input parameters: filenames for
-//   1: input MESMER card file 
+//   1: input MESMER card file
 //   2: input MuE cfg file
 //
 // G.Abbiendi  24/Feb/2020 first version: read MESMER events from ascii input
-//     updated 17/Apr/2020 
-// G.A.+C.Carloni Calame 17/Mar/2022: embedded MESMER generation 
+//     updated 17/Apr/2020
+// G.A.+C.Carloni Calame 17/Mar/2022: embedded MESMER generation
 /////////////////////////////////////////////////////////////////////////////
 
 #include <fstream>
@@ -38,13 +38,13 @@ int main(int argc, char* argv[])
 
   if (argc != 3)
   {
-    cerr << "Usage : "<< argv[0] << " input_mesmer_card_file  input_MuE_cfg_file \n";
+    cerr << "Usage : " << argv[0] << " input_mesmer_card_file  input_MuE_cfg_file \n";
     exit(100);
   }
 
-  for(int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; i++)
     printf("%s \n", argv[i]);
-    
+
   // set it to true to debug
   bool _debug_ = false;
   bool _debug_inp_ = true;
@@ -109,9 +109,9 @@ int main(int argc, char* argv[])
   auto gamma = new GammaFunctionGenerator;
   auto ecalprop = new ECALProperties();
   auto myparam = new EMECALShowerParametrization(ecalprop,
-                                                 {100.0, 0.1},
-                                                 {1.0, 0.1, 100.0, 1.0},
-                                                 1, 1);
+  {100.0, 0.1},
+  {1.0, 0.1, 100.0, 1.0},
+  1, 1);
   auto TheEcal = new ECAL(5, -7.125, 7.125, 5, -7.125, 7.125);
 
   while (nev < HowManyEvts)

@@ -9,8 +9,8 @@
 
 
 //#include "RandomEngineAndDistribution.h"
-#include "GammaFunctionGenerator.h" 
-#include "RadialInterval.h" 
+#include "GammaFunctionGenerator.h"
+#include "RadialInterval.h"
 #include <iostream>
 #include "Math/Vector3D.h"
 #include <TRandom3.h>
@@ -22,7 +22,8 @@
 
 class GammaFunctionGenerator;
 
-class EMShower {
+class EMShower
+{
   typedef ROOT::Math::XYZVector XYZPoint;
   typedef pair<XYZPoint, double> Spot;
   typedef pair<unsigned int, double> Step;
@@ -71,36 +72,33 @@ private:
   void setIntervals(unsigned icomp, RadialInterval& rad);
 
   // integer gamma function generator
-  GammaFunctionGenerator* myGammaGenerator; 
-    
+  GammaFunctionGenerator* myGammaGenerator;
+
   // The parametrization
   EMECALShowerParametrization* const theParam;
 
   // The Calorimeter properties
   const ECALProperties* theECAL;
-    
+
   // The crystal grid
   ECAL* theGrid;
-  //TH2F* EcalGrid; 
+  //TH2F* EcalGrid;
   bool bFixedLength_;
   int nPart;
   // The incident particle(s)
   //std::vector<const RawParticle*>* const thePart;
 
   double X0depth;
-    
+
   std::vector<double> energy_in;
   std::vector<double> coo;
-  
 
   // The basic quantities for the shower development.
 
-     
   std::vector<double> theNumberOfSpots;
   std::vector<double> Etot;
   //std::vector<std::vector<double> > Etot_step;
   std::vector<double> Etot_step;
-
 
   std::vector<double> E;
   std::vector<double> photos;
@@ -134,27 +132,22 @@ private:
   unsigned nSteps;
   bool stepsCalculated;
 
-
   // Histos
-    TH1F* Rad1;
-    TH1F* Rad2;
-    TH1F* Rad3;
-    TH1F* Rad4;
-    TH1F* RadTot;
-    TH1F* en_1cell;
-    TH1F* en_3x3cell;
-    
-    
-    TH1F* Longit;
-    
-    
+  TH1F* Rad1;
+  TH1F* Rad2;
+  TH1F* Rad3;
+  TH1F* Rad4;
+  TH1F* RadTot;
+  TH1F* en_1cell;
+  TH1F* en_3x3cell;
+
+  TH1F* Longit;
 
   //  Histos* myHistos;
   IncGamma myIncompleteGamma;
 
   // Random engine
   //const RandomEngineAndDistribution* random;
-
 
 };
 

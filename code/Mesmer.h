@@ -47,13 +47,13 @@ extern "C" void mesmer_setup
  double* phmass);
 
 extern "C" void generate_event_mesmer(double* pmu, int *nfs, int *mcids, double (*pmat)[4], double *weight,
-				      int *itag, long int *ievtnr, double *wnovp, double *wnohad, double *wLO,
-				      double *wNLO, double *cwvp, int *ierr);
+                                      int *itag, long int *ievtnr, double *wnovp, double *wnohad, double *wLO,
+                                      double *wNLO, double *cwvp, int *ierr);
 
-extern "C" void finalize_mesmer(double *xsw, double *exsw, long int *foohpm, long int *fooh, 
-				double *truemax, long int *nabove, long int *nlt0, 
-				double *xsbias, double *exsbias, double *xsbiasn, double *exsbiasn, 
-				double *sumow, double *sum2ow2, double *sumnow, double *sum2now2);
+extern "C" void finalize_mesmer(double *xsw, double *exsw, long int *foohpm, long int *fooh,
+                                double *truemax, long int *nabove, long int *nlt0,
+                                double *xsbias, double *exsbias, double *xsbiasn, double *exsbiasn,
+                                double *sumow, double *sum2ow2, double *sumnow, double *sum2now2);
 
 extern "C" void IncomingMuonMomentum_mesmer(double* pmu);
 
