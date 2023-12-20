@@ -91,10 +91,10 @@ int main(int argc, char* argv[])
   //gROOT->SetBatch(kFALSE);
 
   // Initialize Root application
-  TRint* app = new TRint("Root Application", &argc, argv);
+  auto app = new TRint("Root Application", &argc, argv);
 
-  MuE::Setup* setup = new MuE::Setup();
-  MuE::Event* event = new MuE::Event();
+  auto setup = new MuE::Setup();
+  auto event = new MuE::Event();
 
   TChain chain("MuEtree"); // chain event trees
   TChain parchain("MuEsetup"); // chain parameter trees
@@ -138,7 +138,8 @@ int main(int argc, char* argv[])
 
     if (ientry < 0)
     {
-      cerr << "***ERROR in chaining MuEsetup, ifil = " << ifil << ", ientry = " << ientry << endl;
+      cerr << "***ERROR in chaining MuEsetup, ifil = " << ifil << ", ientry = "
+           << ientry << endl;
       break;
     }
 
@@ -148,14 +149,16 @@ int main(int argc, char* argv[])
 
     if (ifil == 0)
     {
-      cout << "\n" << "========================================================================" << endl;
+      cout << "\n" << "===============================================" << endl;
       pargen = setup->GetMCpara();
       cout << "MuE generator: " << pargen.program_version << endl;
       cout << "Run Number: " << pargen.SampleTag << endl;
       string strwgt = pargen.UNWGT ? "Unweighted" : "Weighted";
       cout << strwgt << " events generation" << endl;
-      cout << "Mode : " << pargen.Mode << ", nphotmode : " << pargen.nphotmode << endl;
-      cout << "radiation from muon, electron (1:on;0:off) : " << pargen.radmuch << " " << pargen.radelch << endl;
+      cout << "Mode : " << pargen.Mode;
+           << ", nphotmode : " << pargen.nphotmode << endl;
+      cout << "radiation from muon, electron (1:on;0:off) : "
+           << pargen.radmuch << " " << pargen.radelch << endl;
 
       if (!pargen.EXTBEAM)
       {
@@ -181,10 +184,12 @@ int main(int argc, char* argv[])
       cout << "Limit lepton angle      = " << pargen.ththr << " mrad" << endl;
 
       if (pargen.i_acopl == 0) cout << "No Acoplanarity cut" << endl;
-      else cout << "Acoplanarity cut (" << pargen.i_acopl << ") = " << pargen.cut_acopl << " mrad" << endl;
+      else cout << "Acoplanarity cut (" << pargen.i_acopl << ") = "
+                << pargen.cut_acopl << " mrad" << endl;
 
       if (pargen.i_elast == 0) cout << "No Elasticity cut" << endl;
-      else cout << "Elasticity cut (" << pargen.i_elast << ") = " << pargen.cut_elast << " mrad" << endl;
+      else cout << "Elasticity cut (" << pargen.i_elast << ") = "
+                << pargen.cut_elast << " mrad" << endl;
 
       cout << "Initial normalization Wnorm = " << setprecision(8) << pargen.Wnorm << " ub" << endl;
 
@@ -193,7 +198,7 @@ int main(int argc, char* argv[])
       if (pargen.isync == 0) cout << "random number sequence is synchronized. " << endl;
       else cout << "random number sequence is not synchronized. " << endl;
 
-      cout << "========================================================================" << endl;
+      cout << "=======================================================" << endl;
     }
     else
     {
@@ -214,9 +219,15 @@ int main(int argc, char* argv[])
     cout << "N negative weights        = " << setup->MCsums.Nwgt_Negative << endl;
     cout << "N weights above Wmax      = " << setup->MCsums.Nwgt_OverMax << endl;
     cout << "True Max weight           = " << setup->MCsums.WmaxTrue << endl;
-    cout << "Cross section             = " << setup->MCsums.Xsec << " +/- " << setup->MCsums.XsecErr << endl;
-    cout << "Cross section (negative)  = " << setup->MCsums.Xsec_Negative << " +/- " << setup->MCsums.Xsec_Negative_Err << endl;
-    cout << "Cross section (above max) = " << setup->MCsums.Xsec_OverMax << " +/- " << setup->MCsums.Xsec_OverMax_Err << endl;
+
+    cout << "Cross section             = " << setup->MCsums.Xsec << " +/- "
+                                           << setup->MCsums.XsecErr << endl;
+
+    cout << "Cross section (negative)  = " << setup->MCsums.Xsec_Negative << " +/- "
+                                           << setup->MCsums.Xsec_Negative_Err << endl;
+
+    cout << "Cross section (above max) = " << setup->MCsums.Xsec_OverMax << " +/- "
+                                           << setup->MCsums.Xsec_OverMax_Err << endl;
 
     // incremental sums
     sums.Nevgen         += setup->MCsums.Nevgen;
@@ -254,19 +265,26 @@ int main(int argc, char* argv[])
 
   // FINAL printouts
   cout << endl;
-  cout << "================================================================" << endl;
-  cout << "==== TOTAL STATISTICS ==========================================" << endl;
-  cout << "================================================================" << endl;
+  cout << "===========================================================" << endl;
+  cout << "==== TOTAL STATISTICS =====================================" << endl;
+  cout << "===========================================================" << endl;
   cout << "N generated events        = " << sums.Nevgen << endl;
   cout << "N weights                 = " << sums.Nwgt << endl;
   cout << "N negative weights        = " << sums.Nwgt_Negative << endl;
   cout << "N weights above Wmax      = " << sums.Nwgt_OverMax << endl;
   cout << "True Max weight           = " << WmaxFinal << endl;
-  cout << "Cross section             = " << sums.Xsec << " +/- " << sums.XsecErr << endl;
-  cout << "Cross section (negative)  = " << sums.Xsec_Negative << " +/- " << sums.Xsec_Negative_Err << endl;
-  //  cout<<"Cross section (above max) = "<< sums.Xsec_OverMax << " +/- " << sums.Xsec_OverMax_Err << endl;
+
+  cout << "Cross section             = " << sums.Xsec << " +/- "
+                                         << sums.XsecErr << endl;
+
+  cout << "Cross section (negative)  = " << sums.Xsec_Negative << " +/- "
+                                         << sums.Xsec_Negative_Err << endl;
+
+  //  cout<<"Cross section (above max) = "<< sums.Xsec_OverMax << " +/- "
+                                          << sums.Xsec_OverMax_Err << endl;
+
   cout << "Cross section (above max) =  *** TO BE DEFINED *** " << endl;
-  cout << "================================================================" << endl;
+  cout << "===========================================================" << endl;
 
   //.....................................................................
   // Initialise the muon and electron masses used in class Particle
@@ -292,7 +310,10 @@ int main(int argc, char* argv[])
   //
   Long_t n_events = cfg.n_events;
 
-  if (n_events <0) cerr << "\n" << "Kinematic distributions will be loaded from existing results." << endl;
+  if (n_events <0)
+  {
+    cerr << "\n" << "Kinematic distributions will be loaded from existing results." << endl;
+  }
   else
   {
     if (n_events == 0)
@@ -300,7 +321,9 @@ int main(int argc, char* argv[])
       n_events = nevtot;
       if (sums.Nwgt != nevtot)
       {
-        cerr << "***WARNING: total number of chained events ("<<nevtot <<") is different from the expected number of generated events ("<<sums.Nwgt<<")"<<endl;
+        cerr << "***WARNING: total number of chained events ("
+             << nevtot <<") is different from the expected number of generated events ("
+             << sums.Nwgt << ")" << endl;
       }
     } else
     {
@@ -317,11 +340,13 @@ int main(int argc, char* argv[])
 
   auto gamma = new GammaFunctionGenerator;
   auto ecalprop = new ECALProperties();
+
   auto myparam = new EMECALShowerParametrization(ecalprop,
                                                  {100.0, 0.1},
                                                  {1.0, 0.1, 100.0, 1.0},
                                                  1,
                                                  1);
+
   auto TheEcal = new ECAL(5, -7.125, 7.125, 5, -7.125, 7.125);
 
   for (Long_t iev = 0; iev < n_events; ++iev)
@@ -329,7 +354,8 @@ int main(int argc, char* argv[])
     Long64_t ientry = chain.LoadTree(iev);
     if (ientry < 0)
     {
-      cerr << "***ERROR in chaining MuE, event = " << iev << ", ientry = " << ientry << endl;
+      cerr << "***ERROR in chaining MuE, event = " << iev
+           << ", ientry = " << ientry << endl;
       break;
     }
     if (iev % 1000000 == 0 ) cerr << "\n processing event : " << iev << "\r" << flush;
@@ -341,11 +367,8 @@ int main(int argc, char* argv[])
 
     if (std::abs(evwgt) > 1e-17)
     {
-      //%%%%%%%%%%%%%%%%%%%%%%%%%%%
       fs.Process(*event, gamma, myparam, TheEcal);
-      //%%%%%%%%%%%%%%%%%%%%%%%%%%%
       analyzer.Analyze(*event, fs);
-      //%%%%%%%%%%%%%%%%%%%%%%%%%%%
     }
     else
     {
@@ -359,12 +382,10 @@ int main(int argc, char* argv[])
 
   cout << endl << "last Random seed = " << gRandom->GetSeed() << endl;
   cout << "last call to Rndm() = " << setw(20) << setprecision(17) << gRandom->Rndm() << endl;
-  ///////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
-  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   analyzer.EndJob(sums, fs, &mc_inputs);
-  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   delete event;
   delete setup;
