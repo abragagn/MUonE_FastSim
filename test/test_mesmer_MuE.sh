@@ -73,7 +73,7 @@ cat > fastSim.cfi <<!
 ################################################################################
 cat > analysis.cfi <<!
 <cfi>
-0       # bool makeTree; 1(0) = do(not) produce the output Tree
+1       # bool makeTree; 1(0) = do(not) produce the output Tree
 1       # bool doTemplates; 1(0) = do (not) produce 2D template histos
 50.     # max Theta for event selection
 32.     # max Theta for template histograms
