@@ -24,7 +24,10 @@ class Analysis
 public:
   Analysis(const One_Input & p, const MCpara & g,
            const FS_Input & fsi, const AN_Input & a) :
-    parmain(p), pargen(g), parsim(fsi), paran(a) {}
+    parmain(p),
+    pargen(g), 
+    arsim(fsi),
+    paran(a) {}
 
   virtual ~Analysis() {};
 

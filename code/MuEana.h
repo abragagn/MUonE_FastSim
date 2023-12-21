@@ -107,19 +107,19 @@ public:
 class KineVars
 {
 public:
-  Double_t t13; // Mandelstam t (muon leg)
-  Double_t t24; // Mandelstam t (electron leg)
-  Double_t x13; // Feynman x (muon leg)
-  Double_t x24; // Feynman x (electron leg)
-  Double_t tt_e; // t computed from electron angle with LO formulas
-  Double_t xt_e; // x computed from electron angle with LO formulas
+  Double_t t13;   // Mandelstam t (muon leg)
+  Double_t t24;   // Mandelstam t (electron leg)
+  Double_t x13;   // Feynman x (muon leg)
+  Double_t x24;   // Feynman x (electron leg)
+  Double_t tt_e;  // t computed from electron angle with LO formulas
+  Double_t xt_e;  // x computed from electron angle with LO formulas
 
-  Double_t Ee; // electron energy
-  Double_t Emu; // muon energy
-  Double_t the; // electron theta (in mrad)
-  Double_t thmu; // muon theta (in mrad)
-  Double_t phe; // electron phi (from -pi to +pi)
-  Double_t phmu; // muon phi (from -pi to +pi)
+  Double_t Ee;    // electron energy
+  Double_t Emu;   // muon energy
+  Double_t the;   // electron theta (in mrad)
+  Double_t thmu;  // muon theta (in mrad)
+  Double_t phe;   // electron phi (from -pi to +pi)
+  Double_t phmu;  // muon phi (from -pi to +pi)
 
   Double_t cooxmu;
   Double_t cooymu;
@@ -162,8 +162,8 @@ public:
   Double_t Ecell25;
   Double_t n_cell_e;
 
-  Double_t deltaPhi; // acoplanarity (deltaPhi)
-  Double_t openingAngle; // opening angle mu-e out in the Lab
+  Double_t deltaPhi;      // acoplanarity (deltaPhi)
+  Double_t openingAngle;  // opening angle mu-e out in the Lab
   Double_t tripleProduct; // triple product btw normalized vectors i . mu x e
 
   void SetMuonOut(const MuonOut & m)

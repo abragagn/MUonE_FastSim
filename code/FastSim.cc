@@ -30,7 +30,9 @@ const Double_t FastSim::me_PDG = 0.5109989461 * 0.001;
 const Double_t FastSim::station_Length = 1.; // 1m
 const Double_t FastSim::detector_Size = 0.1; // 10cm
 
-FastSim::FastSim(const MuE::MCpara & pargen, const MuE::FS_Input & parsim,  bool _debug_) :
+FastSim::FastSim(const MuE::MCpara & pargen,
+                 const MuE::FS_Input & parsim,
+                 bool _debug_) :
   mm(pargen.mass_mu), me(pargen.mass_e), Qbeam(pargen.charge_mu),
   Ebeam(pargen.Ebeam), EbeamRMS(pargen.EbeamRMS), model(parsim.model),
   MSopt(parsim.MSopt), twosteps(parsim.twosteps), thickness(parsim.thickness),
@@ -53,7 +55,8 @@ FastSim::FastSim(const MuE::MCpara & pargen, const MuE::FS_Input & parsim,  bool
     cout << "\n Simple detector model, DetModel = " << model
          << ", option = " << MSopt << ", twosteps = " << twosteps << endl;
     cout << " material thickness = " << thickness << " X0,"
-         << " intrinsic angular resolution = " << intrinsic_resolution << " mrad " << endl;
+         << " intrinsic angular resolution = " << intrinsic_resolution << " mrad "
+         << endl;
   }
   else if (model == 1)
   {
@@ -62,7 +65,8 @@ FastSim::FastSim(const MuE::MCpara & pargen, const MuE::FS_Input & parsim,  bool
   }
   else
   {
-    cout << "\n" << "*** ERROR : FastSim, undefined detector model with DetModel = " << model << endl;
+    cout << "\n" << "*** ERROR : FastSim, undefined detector model with DetModel = "
+         << model << endl;
     std::exit(999);
   }
 
@@ -90,13 +94,19 @@ FastSim::FastSim(const MuE::MCpara & pargen, const MuE::FS_Input & parsim,  bool
 // process an event
 //
 void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
-                      EMECALShowerParametrization* const & myParam, ECAL* const & myGrid)
+                      EMECALShowerParametrization* const & myParam,
+                      ECAL* const & myGrid)
 {
 
-  if (debug) cout << "\n Process:  Run = " << event.RunNr << " , Event = " << event.EventNr << endl;
+  if (debug) cout << "\n Process:  Run = " << event.RunNr
+                  << " , Event = " << event.EventNr << endl;
 
   //initial particle 4-momenta, only the muon is moving because the other don't exist yet
-  p_mu_in.SetPxPyPzE(event.muin.px, event.muin.py, event.muin.pz, event.muin.E());
+  p_mu_in.SetPxPyPzE(event.muin.px,
+                      event.muin.py,
+                      event.muin.pz,
+                      event.muin.E());
+
   p_e_in.SetPxPyPzE(0, 0, 0, me);
 
   p_system = p_mu_in + p_e_in;
@@ -105,7 +115,9 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
   int i = event.EventNr;
 
   //  Double_t pcm = P_2bodies_CoM(Minv, mm, me);
-  if (debug) cout << "\n" << "Incoming muon energy = " << std::fixed << setprecision(3) << p_mu_in.E() << " GeV" << endl;
+  if (debug) cout << "\n" << "Incoming muon energy = "
+                  << std::fixed << setprecision(3) << p_mu_in.E() << " GeV"
+                  << endl;
   //      << " GeV, s = "<<s<<" GeV^2, sqrt(s) = "<<Minv<<" GeV, pcm = "<<pcm<<" GeV"<<endl;
 
   bool found_mu = false;
@@ -155,11 +167,21 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
     }
     else
     {
-      cout << "\n*** ERROR: unexpected particle in Event " << event.EventNr << endl;
-      cout << "\t incoming muon: [id:" << event.muin.pdgId << "] (" << event.muin.px << ", " << event.muin.py << ", " << event.muin.pz << ")" << endl;
+      cout << "\n*** ERROR: unexpected particle in Event " << event.EventNr
+           << endl;
+
+      cout << "\t incoming muon: [id:" << event.muin.pdgId << "] ("
+           << event.muin.px << ", " << event.muin.py << ", "
+           << event.muin.pz << ")" << endl;
+
       cout << "\t final-state particles: " << endl;
+
       for (const auto &fsp : event.fspart)
-        cout << "\t [id:" << fsp.pdgId << "] (" << fsp.px << ", " << fsp.py << ", " << fsp.pz << ")" << endl;
+      {
+        cout << "\t [id:" << fsp.pdgId << "] (" << fsp.px << ", " << fsp.py
+             << ", " << fsp.pz << ")" << endl;
+      }
+
       std::exit(222);
     }
   }
@@ -185,12 +207,16 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
 
 
   // Generator-level kinematics
-  genKin = LoadKineVars(p_mu_in, p_e_in, p_mu_out, p_e_out, coordinates, def_angle, def_angle_smear, tar, n_phot, myGrid);
+  genKin = LoadKineVars(p_mu_in, p_e_in, p_mu_out, p_e_out, coordinates,
+                        def_angle, def_angle_smear, tar, n_phot, myGrid);
 
 
   // detector level cinematic with divergence, MCS and propagation
-  Propagate(p_mu_in_mod, p_mu_out_mod, p_e_out_mod, photons_mod, coordinates, def_angle, def_angle_smear);
-  detKin = LoadKineVars(p_mu_in_mod, p_e_in_mod, p_mu_out_mod, p_e_out_mod, coordinates, def_angle, def_angle_smear, tar, nphot, myGrid);
+  Propagate(p_mu_in_mod, p_mu_out_mod, p_e_out_mod, photons_mod, coordinates,
+            def_angle, def_angle_smear);
+
+  detKin = LoadKineVars(p_mu_in_mod, p_e_in_mod, p_mu_out_mod, p_e_out_mod,
+                        coordinates, def_angle, def_angle_smear, tar, nphot, myGrid);
 
 
   LoadPhotons(photons_mod, coordinates, nphot, p_mu_in_mod, myGrid); // only rotation and propagation
@@ -198,7 +224,7 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
 
   //////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
-  //TEST PER IL CALORIMETRO SCELGP POSIZIONE DELL'ELETTRONE
+  //TEST PER IL CALORIMETRO SCELGO POSIZIONE DELL'ELETTRONE
   //NELL'ANGOLO O AL CENTRO/////////////////////////////////////////////////////
   //coordinates[1][0]=0;
   //coordinates[1][1]=0;
@@ -235,13 +261,16 @@ KineVars FastSim::LoadKineVars(const PxPyPzEVector & p_mu_in,
 {
 
   MuonOut m = p_mu_out.E() > 0 ?
-    DetMuonOut(p_mu_in, p_mu_out, coo, def_angle, def_angle_smear, tar, n_phot) : MuonOut();
+    DetMuonOut(p_mu_in, p_mu_out, coo, def_angle, def_angle_smear, tar, n_phot)
+    : MuonOut();
 
   Electron e = p_e_out.E() > 0 ?
-    DetElectron(p_e_in, p_e_out, coo, def_angle, def_angle_smear, myGrid) : Electron();
+    DetElectron(p_e_in, p_e_out, coo, def_angle, def_angle_smear, myGrid)
+    : Electron();
 
   MuEpair d = (p_mu_out.E() > 0 && p_e_out.E() > 0) ?
-    DetMuEpair(p_mu_in, p_e_in, p_mu_out, p_e_out) : MuEpair();
+    DetMuEpair(p_mu_in, p_e_in, p_mu_out, p_e_out)
+    : MuEpair();
 
   return KineVars(m, e, d);
 }
@@ -437,7 +466,8 @@ void FastSim::LoadPhotons(const std::vector<PxPyPzEVector> & photons,
         photon1.energyCoM = p_gamma_CoM.E();
         photon1.cooxph = coo[2][0];
         photon1.cooyph = coo[2][1];
-        photon1.n_cell_ph = myGrid->GiveCentralCell(coo[3][0] * 100, coo[3][1] * 100); //in cm
+        photon1.n_cell_ph = myGrid->GiveCentralCell(coo[3][0] * 100,
+                                                    coo[3][1] * 100); //in cm
       }
       else if (i == 1)
       {
@@ -452,7 +482,8 @@ void FastSim::LoadPhotons(const std::vector<PxPyPzEVector> & photons,
         photon2.energyCoM = p_gamma_CoM.E();
         photon2.cooxph = coo[3][0];
         photon2.cooyph = coo[3][1];
-        photon2.n_cell_ph = myGrid->GiveCentralCell(coo[3][0] * 100, coo[3][1] * 100); //in cm
+        photon2.n_cell_ph = myGrid->GiveCentralCell(coo[3][0] * 100,
+                                                    coo[3][1] * 100); //in cm
       }
     }
   }
@@ -933,7 +964,8 @@ Double_t FastSim::ThetaRMS(const PxPyPzEVector & k) const
   {
     Double_t msc = thickness > 0 ? MuE::Target_thrms(pmom, thickness) : 0; // in rad
     // N.B. intrinsic_resolution is in mrad
-    thrms = twosteps ? msc : sqrt(msc * msc + 1e-6 * intrinsic_resolution * intrinsic_resolution);
+    thrms = twosteps ? msc : sqrt(msc * msc + 1e-6 * intrinsic_resolution
+                                  * intrinsic_resolution);
   }
   else if (model == 1)
   {
@@ -1062,7 +1094,8 @@ PxPyPzEVector FastSim::Lorentz_ToCoM(const PxPyPzEVector & pLab) const
   else
   {
     Double_t ecm = (pLab.E() * p_system.E()
-                    - pLab.Px() * p_system.Px() - pLab.Py() * p_system.Py() - pLab.Pz() * p_system.Pz()) / Minv;
+                    - pLab.Px() * p_system.Px() - pLab.Py() * p_system.Py()
+                    - pLab.Pz() * p_system.Pz()) / Minv;
 
     Double_t fn = (ecm + pLab.E()) / (p_system.E() + Minv);
 
@@ -1081,7 +1114,8 @@ PxPyPzEVector FastSim::Lorentz_ToLab(const PxPyPzEVector & pCoM) const
   else
   {
     Double_t elab = (pCoM.Px() * p_system.Px() + pCoM.Py() * p_system.Py()
-                     + pCoM.Pz() * p_system.Pz() + pCoM.E() * p_system.E()) / Minv;
+                     + pCoM.Pz() * p_system.Pz() + pCoM.E() * p_system.E())
+                     / Minv;
 
     Double_t fn   = (elab + pCoM.E()) / (p_system.E() + Minv);
 
@@ -1198,7 +1232,9 @@ void FastSim::PrepareEMShower(KineVars & kv, PxPyPzEVector & e_out_mod,
   {
     for (unsigned int j = 0; j < n_photons; j++)
     {
-      cellPH.push_back(myGrid->GiveCentralCell(c[j + 2][0] * 100, c[j + 2][1] * 100));
+      cellPH.push_back(myGrid->GiveCentralCell(c[j + 2][0] * 100, c[j + 2][1]
+                        * 100));
+      
       //cout<< "pre ciclo"<<endl;
       PxPyPzEVector phot = photons.at(j);
       en_ph_sm.push_back(phot.E());

@@ -342,10 +342,10 @@ int main(int argc, char* argv[])
   auto ecalprop = new ECALProperties();
 
   auto myparam = new EMECALShowerParametrization(ecalprop,
-  {100.0, 0.1},
-  {1.0, 0.1, 100.0, 1.0},
-  1,
-  1);
+                                                  {100.0, 0.1},
+                                                  {1.0, 0.1, 100.0, 1.0},
+                                                  1,
+                                                  1);
 
   auto TheEcal = new ECAL(5, -7.125, 7.125, 5, -7.125, 7.125);
 
