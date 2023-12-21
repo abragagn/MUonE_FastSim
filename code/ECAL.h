@@ -34,8 +34,8 @@ public:
 
 
   //double radlen;
-  void CreateGrid(double nbinsx, double xlow, double xup, double nbinsy,
-                  double ylow, double yup);
+  void CreateGrid(double nbinsx, double xlow, double xup,
+                  double nbinsy, double ylow, double yup);
 
   TH2F* GiveEcalGrid();
   double GiveCentralCell(double coox, double cooy);

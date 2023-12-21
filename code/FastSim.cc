@@ -189,7 +189,9 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
   tar = gRandom->Integer(2);
   vertex = gRandom->Uniform(); // where inc. muon interacts in the Beryllium tar.
 
-  //make a copy of the initial and after the scattering 4-momenta in order to modify them later without losing the generator level ones
+  //make a copy of the initial and after the scattering 4-momenta in order t
+  // modify them later without losing the generator level ones
+
   PxPyPzEVector p_mu_in_mod = p_mu_in;
   PxPyPzEVector p_mu_out_mod = p_mu_out;
   PxPyPzEVector p_e_in_mod = p_e_in;
@@ -216,7 +218,8 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
             def_angle, def_angle_smear);
 
   detKin = LoadKineVars(p_mu_in_mod, p_e_in_mod, p_mu_out_mod, p_e_out_mod,
-                        coordinates, def_angle, def_angle_smear, tar, nphot, myGrid);
+                        coordinates, def_angle, def_angle_smear, tar, nphot,
+                        myGrid);
 
 
   LoadPhotons(photons_mod, coordinates, nphot, p_mu_in_mod, myGrid); // only rotation and propagation
@@ -243,10 +246,6 @@ void FastSim::Process(const MuE::Event & event, GammaFunctionGenerator* & gamma,
   photons_mod.clear();
 
 }
-
-
-
-
 
 KineVars FastSim::LoadKineVars(const PxPyPzEVector & p_mu_in,
                                const PxPyPzEVector & p_e_in,
@@ -318,7 +317,8 @@ Electron FastSim::DetElectron(const PxPyPzEVector & p_e_in,
   //e.the = 1e3* def_angle[1][0];
   e.phe = p_e_out.Phi();
 
-  // Note: here Ebeam is the average beam energy, so tt_e and xt_e are defined under this assumption
+  // Note: here Ebeam is the average beam energy, so tt_e and xt_e are defined
+  // under this assumption
   MuE::ElasticState emu(Ebeam, mm, me, e.the);
   e.tt_e = emu.GetT();
   e.xt_e = emu.GetX();
@@ -1198,11 +1198,10 @@ void FastSim::RandomNrSync()
 }
 
 
-
-
 void FastSim::PrepareEMShower(KineVars & kv, PxPyPzEVector & e_out_mod,
                               std::vector<PxPyPzEVector> & photons,
-                              TMatrixD & c, const Double_t & i,
+                              TMatrixD & c,
+                              const Double_t & i,
                               const Double_t & r_mu,
                               GammaFunctionGenerator* & gamma,
                               EMECALShowerParametrization* const & myParam,
@@ -1232,12 +1231,12 @@ void FastSim::PrepareEMShower(KineVars & kv, PxPyPzEVector & e_out_mod,
   {
     for (unsigned int j = 0; j < n_photons; j++)
     {
-      cellPH.push_back(myGrid->GiveCentralCell(c[j + 2][0] * 100, c[j + 2][1]
-                        * 100));
-      
+      cellPH.push_back(myGrid->GiveCentralCell(c[j + 2][0] * 100,
+                                               c[j + 2][1] * 100));
+
       //cout<< "pre ciclo"<<endl;
       PxPyPzEVector phot = photons.at(j);
-      en_ph_sm.push_back(phot.E());
+      en_ph_sm.push_back(pot.E()h);
       //cout<< "pre ciclo"<<endl;
       ECAL_E += en_ph_sm.at(j);
     }

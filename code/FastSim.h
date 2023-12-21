@@ -40,7 +40,8 @@ public:
   FastSim(const MCpara & pargen, const FS_Input & parsim, bool _debug_ = false);
   virtual ~FastSim() {};
 
-  void Process(const Event & event, GammaFunctionGenerator* & gamma,
+  void Process(const Event & event,
+               GammaFunctionGenerator* & gamma,
                EMECALShowerParametrization* const & myParam,
                ECAL* const & myGrid);
 
@@ -90,17 +91,21 @@ private:
                   PxPyPzEVector & e_out, std::vector<PxPyPzEVector> & photons,
                   TMatrixD & c, TMatrixD & def_angle, TMatrixD & def_angle_smear);
 
-  void PrepareEMShower(KineVars & kv, PxPyPzEVector & e_out_mod,
-                       std::vector<PxPyPzEVector> & photons, TMatrixD & c,
-                       const Double_t & i, const Double_t & r_mu,
+  void PrepareEMShower(KineVars & kv,
+                       PxPyPzEVector & e_out_mod,
+                       std::vector<PxPyPzEVector> & photons,
+                       TMatrixD & c,
+                       const Double_t & i,
+                       const Double_t & r_mu,
                        GammaFunctionGenerator* & gamma,
                        EMECALShowerParametrization* const & myParam,
                        ECAL* const & myGrid);
 
   void LoadECAL (KineVars & kv, ECAL* const & myGrid, int j);
 
-  TMatrixD Def_angle( PxPyPzEVector & p_mu_in, PxPyPzEVector & p_mu_out,
-                      PxPyPzEVector & p_e_out);
+  TMatrixD Def_angle(PxPyPzEVector & p_mu_in,
+                     PxPyPzEVector & p_mu_out,
+                     PxPyPzEVector & p_e_out);
 
   Double_t Def_angle_ph(const PxPyPzEVector & p_mu_in,
                         const PxPyPzEVector & p_gamma_lab) const;
@@ -109,7 +114,8 @@ private:
                         const PxPyPzEVector & p_e_in,
                         const PxPyPzEVector & p_mu_out,
                         const PxPyPzEVector & p_e_out,
-                        TMatrixD & c, TMatrixD & def_angle,
+                        TMatrixD & c,
+                        TMatrixD & def_angle,
                         TMatrixD & def_angle_smear,
                         const Double_t & tar,
                         const Double_t & n_phot,
@@ -131,7 +137,8 @@ private:
 
   Electron DetElectron(const PxPyPzEVector & p_e_in,
                        const PxPyPzEVector & p_e_out,
-                       TMatrixD & c, TMatrixD & def_angle,
+                       TMatrixD & c,
+                       TMatrixD & def_angle,
                        TMatrixD & def_angle_smear,
                        ECAL* const & myGrid) const;
 
@@ -146,29 +153,29 @@ private:
   static const Double_t station_Length; // station length (1 m)
   static const Double_t detector_Size;  // transverse size of Si sensors (10 cm)
 
-  const Double_t & mm; // muon mass
-  const Double_t & me; // electron mass
-  const Double_t & Qbeam; // beam muon charge
-  const Double_t & Ebeam; // average beam energy
-  const Double_t & EbeamRMS; // beam energy spread
+  const Double_t & mm;        // muon mass
+  const Double_t & me;        // electron mass
+  const Double_t & Qbeam;     // beam muon charge
+  const Double_t & Ebeam;     // average beam energy
+  const Double_t & EbeamRMS;  // beam energy spread
 
-  Int_t tar; // target where mu interacts
-  Double_t vertex; // where mu interacts in the target
-  Double_t n_phot; // number of photons in the event
+  Int_t tar;        // target where mu interacts
+  Double_t vertex;  // where mu interacts in the target
+  Double_t n_phot;  // number of photons in the event
 
 
   const Int_t & model; // model for detector smearing (gaussian resolution)
   const Int_t & MSopt; // options for multiple scattering (default/only Xplane/only polar)
-  bool twosteps; // if true in model 0 apply only multiple scattering
+  bool twosteps;       // if true in model 0 apply only multiple scattering
   const Double_t & thickness; // material thickness (in X0) for model_=0
   const Double_t & intrinsic_resolution; // intrinsic resolution (in mrad) for model_=0
-  const Double_t & zBias; // signed bias of station length (um)
-  const Double_t & zSigma; // uncertainty of station length (um)
-  bool zSigma_switch; // true if zSigma>0
+  const Double_t & zBias;   // signed bias of station length (um)
+  const Double_t & zSigma;  // uncertainty of station length (um)
+  bool zSigma_switch;       // true if zSigma>0
   bool debug;
 
   PxPyPzEVector p_system; // mu-e centre-of-mass system fourmomentum
-  Double_t Minv; // event invariant mass = sqrt(s)
+  Double_t Minv;          // event invariant mass = sqrt(s)
 
   PxPyPzEVector p_mu_in;
   PxPyPzEVector p_e_in;
@@ -179,11 +186,11 @@ private:
   Double_t thetaMax_ideal; // ideal max theta (geometric acceptance)
   Double_t thetaMax_cor;   // corrected max theta (geometric acceptance) for z bias
 
-  KineVars genKin;    // kinematic variables at Gen-level for e and mu track
-  KineVars detKin;    // kinematic variables at Detector-level for e and mu track
-  KineVars detKinFin; // kinematic variables at Detector-level after MCS, divergence and rotation for e and mu tracks
-  Photon photon1;      // photon 1 variables at Detector-level only rotation and propagation
-  Photon photon2;      // photon 1 variables at Detector-level only rotation and propagation
+  KineVars genKin;      // kinematic variables at Gen-level for e and mu track
+  KineVars detKin;      // kinematic variables at Detector-level for e and mu track
+  KineVars detKinFin;   // kinematic variables at Detector-level after MCS, divergence and rotation for e and mu tracks
+  Photon photon1;       // photon 1 variables at Detector-level only rotation and propagation
+  Photon photon2;       // photon 1 variables at Detector-level only rotation and propagation
   //std::vector<Photon> load_photons;
 };
 }

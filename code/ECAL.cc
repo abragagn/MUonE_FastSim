@@ -18,8 +18,9 @@ using namespace std;
 
 ECAL::ECAL(double nbinsx, double xlow, double xup,
            double nbinsy, double ylow, double yup) :
-            nbinX(nbinsx), nbinY(nbinsy), Xlow(xlow),
-            Xup(xup), Ylow(ylow), Yup(yup) 
+  nbinX(nbinsx), nbinY(nbinsy),
+  Xlow(xlow), Xup(xup),
+  Ylow(ylow), Yup(yup)
 {
   //Queste mappe servono a mappare il numero di bin nel numero vero della cella e viceversa
   //perchè i numeri dei bin sono sballati a causa degli overflow e underflow bins
@@ -74,7 +75,7 @@ ECAL::ECAL(double nbinsx, double xlow, double xup,
   Rev_number[23] = 10;
   Rev_number[24] = 11;
   Rev_number[25] = 12;
-  
+
 
 //  Energy_dist =new TH1F("Energy", "Energy",100,90,100);
 // Energy_dist1 =new TH1F("Energy", "Energy 1 cell",200,0.20,1);
@@ -151,7 +152,7 @@ double ECAL::GiveCentralCell(double coox, double cooy)
     if (n==23) {Array9= new int[9]{17,18,19,22,23,24,0,0,0};}
     if (n==24) {Array9= new int[9]{18,19,20,23,24,25,0,0,0};}
     if (n==25) {Array9= new int[9]{19,20,24,25,0,0,0,0,0};}
-    
+
     return 0;
 }*/
 
@@ -203,14 +204,14 @@ Ecal_->SaveAs(name);*/
 
 /*double* ECAL::Draw_ECAL(int i){
 double* ECluster = new double[3];
-// riempi celle    
-int binMax=EcalGrid->GetMaximumBin();  
+// riempi celle
+int binMax=EcalGrid->GetMaximumBin();
 int CentralCell=number[binMax];
 cout << "cella centrale rev " << Rev_number[CentralCell] <<" and vera " << CentralCell << endl;
 //Energy_dist1->Fill(EcalGrid->GetBinContent(binMax)/energy_IN);
-ECluster[0]=((double)CentralCell); 
+ECluster[0]=((double)CentralCell);
 
-double energy3x3=0.;    
+double energy3x3=0.;
 ECAL::GiveArray3x3(CentralCell);
 for (int i=0; i<9; ++i)
 {
@@ -218,8 +219,8 @@ for (int i=0; i<9; ++i)
     cout << Rev_number[Array9[i]] << " and vera " << Array9[i]<< " c'è energia " << EcalGrid->GetBinContent(Rev_number[Array9[i]]) << endl;
 }
 //Energy_dist3x3->Fill(energy3x3/energy_IN);
-ECluster[1]=(energy3x3); 
-ECluster[2]=(EcalGrid->GetBinContent(binMax)); 
+ECluster[1]=(energy3x3);
+ECluster[2]=(EcalGrid->GetBinContent(binMax));
 
 return ECluster;
 };*/
